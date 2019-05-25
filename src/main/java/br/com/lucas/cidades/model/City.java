@@ -1,7 +1,5 @@
 package br.com.lucas.cidades.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +9,6 @@ public class City {
 
     @Id
     @Column(name = "ibge_id")
-    @JsonProperty("ibge_id")
     private Integer ibgeId;
 
     private String uf;
@@ -21,19 +18,15 @@ public class City {
     private boolean capital;
 
     @Column(name = "lon")
-    @JsonProperty("lon")
     private Double longitude;
 
     @Column(name = "lat")
-    @JsonProperty("lat")
     private Double latitude;
 
     @Column(name = "no_accents")
-    @JsonProperty("no_accents")
     private String noAccents;
 
     @Column(name = "alternative_names")
-    @JsonProperty("alternative_names")
     private String alternativeNames;
 
     private String microregion;

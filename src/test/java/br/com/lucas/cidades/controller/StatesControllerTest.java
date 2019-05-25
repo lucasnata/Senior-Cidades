@@ -1,6 +1,5 @@
 package br.com.lucas.cidades.controller;
 
-import br.com.lucas.cidades.model.City;
 import br.com.lucas.cidades.model.CityDTO;
 import br.com.lucas.cidades.model.FakeCity;
 import br.com.lucas.cidades.service.CityService;
@@ -38,11 +37,11 @@ public class StatesControllerTest {
     @Test
     public void whenGetCapitalsByState_thenReturnJsonCity() throws Exception {
 
-        City city = FakeCity.getFakeCapitalCity();
+        CityDTO city = CityDTO.convertCidadeToCidadeDTO(FakeCity.getFakeCapitalCity());
 
         cityService.saveCity(city);
 
-        given(stateService.getCitiesCapitals()).willReturn(CityDTO.convertListCidadeToListCidadeDTO(Arrays.asList(city)));
+        given(stateService.getCitiesCapitals()).willReturn(Arrays.asList(city));
 
         mockMvc.perform(get("/estado/capitais")
                 .contentType(MediaType.APPLICATION_JSON))

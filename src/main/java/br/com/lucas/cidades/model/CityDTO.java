@@ -1,20 +1,39 @@
 package br.com.lucas.cidades.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CityDTO {
 
+    @JsonProperty("ibge_id")
     private Integer ibgeId;
+
     private String uf;
+
     private String name;
+
     private boolean capital;
+
+    @JsonProperty("lon")
     private Double longitude;
+
+    @JsonProperty("lat")
     private Double latitude;
+
+    @JsonProperty("no_accents")
     private String noAccents;
+
+    @JsonProperty("alternative_names")
     private String alternativeNames;
+
     private String microregion;
+
     private String mesoregion;
+
+    public CityDTO() {
+    }
 
     public CityDTO(Integer ibgeId, String uf, String name, boolean capital, Double longitude, Double latitude, String noAccents, String alternativeNames, String microregion, String mesoregion) {
         this.ibgeId = ibgeId;
@@ -152,5 +171,23 @@ public class CityDTO {
         });
 
         return listCityDTO;
+    }
+
+    public static City convertCidadeDTOToCidade(CityDTO cityDTO) {
+
+        City city = new City(
+                cityDTO.getIbgeId(),
+                cityDTO.getUf(),
+                cityDTO.getName(),
+                cityDTO.isCapital(),
+                cityDTO.getLongitude(),
+                cityDTO.getLatitude(),
+                cityDTO.getNoAccents(),
+                cityDTO.getAlternativeNames(),
+                cityDTO.getMicroregion(),
+                cityDTO.getMesoregion()
+        );
+
+        return city;
     }
 }

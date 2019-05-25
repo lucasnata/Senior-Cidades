@@ -4,9 +4,11 @@ import br.com.lucas.cidades.model.City;
 import br.com.lucas.cidades.model.CityDTO;
 import br.com.lucas.cidades.model.CityRepository;
 import br.com.lucas.cidades.util.CsvUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class CityService {
     CityRepository cityRepository;
 
     public void importCsv(InputStream fis) throws Exception {
-        List<City> cities = CsvUtil.loadObjectList(City.class, fis);
+        List<CityDTO> cities = CsvUtil.loadObjectList(CityDTO.class, fis);
         cities.forEach(city -> saveCity(city));
     }
 
@@ -25,8 +27,8 @@ public class CityService {
         return CityDTO.convertListCidadeToListCidadeDTO((List<City>) cityRepository.findAll());
     }
 
-    public void saveCity(City city) {
-        cityRepository.save(city);
+    public CityDTO saveCity(CityDTO cityDTO) {
+        return CityDTO.convertCidadeToCidadeDTO(cityRepository.save(CityDTO.convertCidadeDTOToCidade(cityDTO)));
     }
 
     public CityDTO getCitybyIbgeId(Integer ibgeId) {
