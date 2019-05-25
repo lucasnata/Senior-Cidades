@@ -1,21 +1,23 @@
 package br.com.lucas.cidades.controller;
 
-import br.com.lucas.cidades.model.CityDTO;
+import br.com.lucas.cidades.service.CityCustomService;
+import br.com.lucas.cidades.model.DTO.CityDTO;
 import br.com.lucas.cidades.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
-public class CitiesController {
+import java.util.List;
 
-    private final CityService cityService;
+@RestController
+public class CitiesController extends ControllerExceptions {
 
     @Autowired
-    public CitiesController(CityService cityService) {
-        this.cityService = cityService;
-    }
+    CityService cityService;
+
+    @Autowired
+    CityCustomService cityCustomService;
 
     @PostMapping("/cidades/importcsv")
     @ResponseStatus(HttpStatus.OK)
@@ -33,7 +35,6 @@ public class CitiesController {
     @RequestMapping(value = "/cidades/{ibgeId}", produces = {"application/json"}, method = RequestMethod.GET)
     @ResponseBody
     public CityDTO getCidade(@PathVariable Integer ibgeId) {
-        // TODO - Exibir mensagem para ibgeId inválido
         return cityService.getCitybyIbgeId(ibgeId);
     }
 
@@ -52,6 +53,18 @@ public class CitiesController {
     @RequestMapping(value = "/cidades/total", produces = {"application/json"})
     @ResponseBody
     public String totalCidades() {
-        return "{total_registros: " + cityService.getTotalCities() + "}";
+        return "{\"total_registros\": " + cityService.getTotalCities() + "}";
+    }
+
+    @RequestMapping(value = "cidades/busca", produces = {"application/json"})
+    @ResponseBody
+    public List<CityDTO> findCidadeColuna(@RequestParam("coluna") String columName, @RequestParam("busca") String busca) {
+        return cityService.findInColumnByString(columName, busca);
+    }
+
+    @RequestMapping(value = "cidades/total_coluna/{columName}", produces = {"application/json"})
+    @ResponseBody
+    public String getTotalCidadesColuna(@PathVariable String columName) {
+        return "{\"total\": " + cityCustomService.countColumnName(columName) + "}";
     }
 }

@@ -1,5 +1,6 @@
-package br.com.lucas.cidades.model;
+package br.com.lucas.cidades.model.DTO;
 
+import br.com.lucas.cidades.model.entity.City;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -189,5 +190,16 @@ public class CityDTO {
         );
 
         return city;
+    }
+
+    public static List<City> convertListCidadeDTOToListCidade(List<CityDTO> listCityDTO) {
+
+        List<City> listCity = new ArrayList<>();
+
+        listCityDTO.forEach(city -> {
+            listCity.add(convertCidadeDTOToCidade(city));
+        });
+
+        return listCity;
     }
 }

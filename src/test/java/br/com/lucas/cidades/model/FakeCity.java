@@ -1,5 +1,7 @@
 package br.com.lucas.cidades.model;
 
+import br.com.lucas.cidades.model.entity.City;
+
 public class FakeCity {
 
     public static City getFakeCity(){

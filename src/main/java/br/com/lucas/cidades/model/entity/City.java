@@ -1,4 +1,4 @@
-package br.com.lucas.cidades.model;
+package br.com.lucas.cidades.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

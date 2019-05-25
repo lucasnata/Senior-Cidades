@@ -1,16 +1,16 @@
 package br.com.lucas.cidades.controller;
 
 import br.com.lucas.cidades.model.*;
+import br.com.lucas.cidades.model.DTO.CityDTO;
+import br.com.lucas.cidades.model.DTO.CityName;
+import br.com.lucas.cidades.model.DTO.NumberCitiesState;
 import br.com.lucas.cidades.service.StateService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class StatesController {
+public class StatesController extends ControllerExceptions{
 
     @Autowired
     StateService stateService;
@@ -33,7 +33,6 @@ public class StatesController {
 
     @GetMapping("/estado/{uf}")
     public Iterable<CityName> getCidadesEstado(@PathVariable Estado uf) {
-        // TODO - Exibir mensagem para estado inválido
         return stateService.getCitiesNameByState(uf);
     }
 }

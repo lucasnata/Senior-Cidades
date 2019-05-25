@@ -1,9 +1,13 @@
 package br.com.lucas.cidades.model;
 
+import br.com.lucas.cidades.model.DTO.CityName;
+import br.com.lucas.cidades.model.DTO.NumberCitiesState;
+import br.com.lucas.cidades.model.entity.City;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CityRepository extends CrudRepository<City, Integer> {
+public interface CityRepository extends CrudRepository<City, Integer>, JpaSpecificationExecutor<City>{
     Iterable<City> findByCapitalTrueOrderByName();
 
     @Query(value = "SELECT COUNT(ibge_id) as numCidades, uf FROM cidade GROUP BY uf ORDER BY 1 DESC LIMIT 1", nativeQuery = true)

@@ -1,8 +1,8 @@
 package br.com.lucas.cidades.service;
 
-import br.com.lucas.cidades.model.City;
-import br.com.lucas.cidades.model.CityDTO;
-import br.com.lucas.cidades.model.CityRepository;
+import br.com.lucas.cidades.model.*;
+import br.com.lucas.cidades.model.DTO.CityDTO;
+import br.com.lucas.cidades.model.entity.City;
 import br.com.lucas.cidades.util.CsvUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +39,10 @@ public class CityService {
 
     public long getTotalCities() {
         return cityRepository.count();
+    }
+
+    public List<CityDTO> findInColumnByString(String columName, String columnValue) {
+        CitySpecification citySpecification = new CitySpecification(columName, columnValue);
+        return CityDTO.convertListCidadeToListCidadeDTO(cityRepository.findAll(citySpecification));
     }
 }

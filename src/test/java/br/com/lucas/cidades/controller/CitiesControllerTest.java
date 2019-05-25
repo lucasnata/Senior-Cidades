@@ -1,8 +1,9 @@
 package br.com.lucas.cidades.controller;
 
-import br.com.lucas.cidades.model.City;
-import br.com.lucas.cidades.model.CityDTO;
+import br.com.lucas.cidades.model.entity.City;
+import br.com.lucas.cidades.model.DTO.CityDTO;
 import br.com.lucas.cidades.model.FakeCity;
+import br.com.lucas.cidades.service.CityCustomService;
 import br.com.lucas.cidades.service.CityService;
 import br.com.lucas.cidades.service.StateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +22,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,6 +35,9 @@ public class CitiesControllerTest {
 
     @MockBean
     CityService cityService;
+
+    @MockBean
+    CityCustomService cityCustomService;
 
     @MockBean
     StateService stateService;
@@ -93,4 +98,24 @@ public class CitiesControllerTest {
         mockMvc.perform(get("/cidades/total"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void whenFindCityByCustomColumn() throws Exception {
+        mockMvc.perform(get("/cidades/busca?coluna=ibgeId&busca=1600303"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void whenFindCityByInvalidCustomColumn() throws Exception {
+        mockMvc.perform(get("/cidades/busca?coluna=ibge_id&busca=A"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void whenCountCustomColumn() throws Exception {
+        mockMvc.perform(get("/cidades/total_coluna/name"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
 }
