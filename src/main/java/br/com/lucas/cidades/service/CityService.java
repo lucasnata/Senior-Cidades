@@ -29,7 +29,7 @@ public class CityService {
         cityRepository.save(city);
     }
 
-    public Iterable<City> getCitybyIbgeId(Integer ibgeId) {
-        return cityRepository.findByIbgeId(ibgeId);
+    public CityDTO getCitybyIbgeId(Integer ibgeId) {
+        return CityDTO.convertCidadeToCidadeDTO(cityRepository.findByIbgeId(ibgeId));
     }
 }

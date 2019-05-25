@@ -1,16 +1,29 @@
 package br.com.lucas.cidades.controller;
 
+import br.com.lucas.cidades.model.City;
+import br.com.lucas.cidades.model.CityDTO;
+import br.com.lucas.cidades.model.FakeCity;
 import br.com.lucas.cidades.service.CityService;
-import org.junit.jupiter.api.Test;
+import br.com.lucas.cidades.service.StateService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import java.util.Arrays;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CitiesController.class)
+@RunWith(SpringRunner.class)
+@WebMvcTest
 public class CitiesControllerTest {
 
     @Autowired
@@ -19,14 +32,43 @@ public class CitiesControllerTest {
     @MockBean
     CityService cityService;
 
+    @MockBean
+    StateService stateService;
+
     @Test
-    public void whenGetCities() throws Exception {
-        mockMvc.perform(get("/cidades"))
-                .andExpect(status().isOk());
+    public void whenGetAllCities_thenReturnJsonCities() throws Exception {
+
+        City city = FakeCity.getFakeCity();
+
+        cityService.saveCity(city);
+
+        given(cityService.getAllCities()).willReturn(CityDTO.convertListCidadeToListCidadeDTO(Arrays.asList(city)));
+
+        mockMvc.perform(get("/cidades")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"name\":\"Presidente Mdici\"")));
     }
 
     @Test
-    public void whenGetCitiesById() throws Exception {
-        mockMvc.perform(get("/cidades/1100015")).andExpect(status().isOk());
+    public void whenGetCityById_thenReturnCity() throws Exception {
+
+        City city = FakeCity.getFakeCity();
+
+        cityService.saveCity(city);
+
+        given(cityService.getCitybyIbgeId(city.getIbgeId())).willReturn(CityDTO.convertCidadeToCidadeDTO(city));
+
+        mockMvc.perform(get("/cidades/" + city.getIbgeId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"name\":\"Presidente Mdici\"")));
+    }
+
+    @Test
+    public void whenGetCityWhithInvalidIbgeId() throws Exception {
+        mockMvc.perform(get("/cidades/A"))
+                .andExpect(status().is4xxClientError());
     }
 }

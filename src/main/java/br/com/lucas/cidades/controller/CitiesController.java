@@ -1,6 +1,5 @@
 package br.com.lucas.cidades.controller;
 
-import br.com.lucas.cidades.model.City;
 import br.com.lucas.cidades.model.CityDTO;
 import br.com.lucas.cidades.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class CitiesController {
 
     @RequestMapping(value = "/cidades/{ibgeId}", produces = {"application/json"}, method = RequestMethod.GET)
     @ResponseBody
-    public Iterable<City> getCidade(@PathVariable Integer ibgeId) {
+    public CityDTO getCidade(@PathVariable Integer ibgeId) {
         return cityService.getCitybyIbgeId(ibgeId);
     }
 }

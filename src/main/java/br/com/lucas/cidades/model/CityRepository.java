@@ -15,7 +15,7 @@ public interface CityRepository extends CrudRepository<City, Integer> {
     @Query(value = "SELECT COUNT(ibge_id) as numCidades, uf FROM cidade GROUP BY uf ORDER BY 1 ", nativeQuery = true)
     Iterable<NumberCitiesState> countByUf();
 
-    Iterable<City> findByIbgeId(Integer ibgeId);
+    City findByIbgeId(Integer ibgeId);
 
     Iterable<CityName> findNameByUf(String uf);
 }
