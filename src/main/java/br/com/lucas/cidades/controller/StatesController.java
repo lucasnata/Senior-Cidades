@@ -1,8 +1,6 @@
 package br.com.lucas.cidades.controller;
 
-import br.com.lucas.cidades.model.City;
-import br.com.lucas.cidades.model.CityName;
-import br.com.lucas.cidades.model.NumberCitiesState;
+import br.com.lucas.cidades.model.*;
 import br.com.lucas.cidades.service.StateService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,7 @@ public class StatesController {
     StateService stateService;
 
     @GetMapping("/estado/capitais")
-    public Iterable<City> getCapitais() {
+    public Iterable<CityDTO> getCapitais() {
         return stateService.getCitiesCapitals();
     }
 
@@ -34,7 +32,8 @@ public class StatesController {
     }
 
     @GetMapping("/estado/{uf}")
-    public Iterable<CityName> getCidadesEstado(@PathVariable String uf) {
+    public Iterable<CityName> getCidadesEstado(@PathVariable Estado uf) {
+        // TODO - Exibir mensagem para estado inválido
         return stateService.getCitiesNameByState(uf);
     }
 }

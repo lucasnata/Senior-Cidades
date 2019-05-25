@@ -20,4 +20,22 @@ public class FakeCity {
         return city;
 
     }
+
+    public static City getFakeCapitalCity(){
+
+        City city = new City(
+                1600303,
+                "AP",
+                "Macap",
+                true,
+                -51.057405457,
+                0.03895101,
+                "Macapa",
+                "",
+                "Macap",
+                "Sul do Amap");
+
+        return city;
+
+    }
 }

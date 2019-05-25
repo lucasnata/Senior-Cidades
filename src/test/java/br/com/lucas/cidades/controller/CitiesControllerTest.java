@@ -67,7 +67,7 @@ public class CitiesControllerTest {
     }
 
     @Test
-    public void whenGetCityWhithInvalidIbgeId() throws Exception {
+    public void whenGetCityWhithInvalidIbgeId_thenReturn400() throws Exception {
         mockMvc.perform(get("/cidades/A"))
                 .andExpect(status().is4xxClientError());
     }

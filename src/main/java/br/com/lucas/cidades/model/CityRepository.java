@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CityRepository extends CrudRepository<City, Integer> {
-    Iterable<City> findByCapitalTrue();
+    Iterable<City> findByCapitalTrueOrderByName();
 
     @Query(value = "SELECT COUNT(ibge_id) as numCidades, uf FROM cidade GROUP BY uf ORDER BY 1 DESC LIMIT 1", nativeQuery = true)
     NumberCitiesState findUfMaxCidades();

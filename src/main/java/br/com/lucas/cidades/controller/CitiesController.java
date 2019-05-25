@@ -20,6 +20,7 @@ public class CitiesController {
     @PostMapping("/cidades/importcsv")
     @ResponseStatus(HttpStatus.OK)
     public void importCsv(@RequestParam("file") MultipartFile file) throws Exception {
+        // TODO - Validar tipo de arquivo
         cityService.importCsv(file.getInputStream());
     }
 
@@ -32,6 +33,7 @@ public class CitiesController {
     @RequestMapping(value = "/cidades/{ibgeId}", produces = {"application/json"}, method = RequestMethod.GET)
     @ResponseBody
     public CityDTO getCidade(@PathVariable Integer ibgeId) {
+        // TODO - Exibir mensagem para ibgeId inválido
         return cityService.getCitybyIbgeId(ibgeId);
     }
 }

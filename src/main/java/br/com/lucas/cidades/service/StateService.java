@@ -1,9 +1,6 @@
 package br.com.lucas.cidades.service;
 
-import br.com.lucas.cidades.model.City;
-import br.com.lucas.cidades.model.CityName;
-import br.com.lucas.cidades.model.CityRepository;
-import br.com.lucas.cidades.model.NumberCitiesState;
+import br.com.lucas.cidades.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +15,8 @@ public class StateService {
     @Autowired
     CityRepository cityRepository;
 
-    public Iterable<City> getCitiesCapitals() {
-        return cityRepository.findByCapitalTrue();
+    public Iterable<CityDTO> getCitiesCapitals() {
+        return CityDTO.convertListCidadeToListCidadeDTO((List<City>) cityRepository.findByCapitalTrueOrderByName());
     }
 
     public String getNumberCitiesStateMinMax() throws JsonProcessingException {
@@ -36,7 +33,7 @@ public class StateService {
         return cityRepository.countByUf();
     }
 
-    public Iterable<CityName> getCitiesNameByState(String uf) {
-        return cityRepository.findNameByUf(uf);
+    public Iterable<CityName> getCitiesNameByState(Estado uf) {
+        return cityRepository.findNameByUf(uf.toString());
     }
 }
