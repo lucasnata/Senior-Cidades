@@ -4,11 +4,9 @@ import br.com.lucas.cidades.model.City;
 import br.com.lucas.cidades.model.CityDTO;
 import br.com.lucas.cidades.model.CityRepository;
 import br.com.lucas.cidades.util.CsvUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -33,5 +31,13 @@ public class CityService {
 
     public CityDTO getCitybyIbgeId(Integer ibgeId) {
         return CityDTO.convertCidadeToCidadeDTO(cityRepository.findByIbgeId(ibgeId));
+    }
+
+    public void removeCity(Integer ibgeId) {
+        cityRepository.delete(cityRepository.findByIbgeId(ibgeId));
+    }
+
+    public long getTotalCities() {
+        return cityRepository.count();
     }
 }

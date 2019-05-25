@@ -4,7 +4,6 @@ import br.com.lucas.cidades.model.CityDTO;
 import br.com.lucas.cidades.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,9 +37,21 @@ public class CitiesController {
         return cityService.getCitybyIbgeId(ibgeId);
     }
 
-    @RequestMapping(value = "/cidades", produces = {"application/json"}, method = RequestMethod.POST)
+    @RequestMapping(value = "/cidades", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void addCidade(@RequestBody CityDTO city) {
         cityService.saveCity(city);
+    }
+
+    @RequestMapping(value = "/cidades", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void removeCidade(@PathVariable Integer ibgeId) {
+        cityService.removeCity(ibgeId);
+    }
+
+    @RequestMapping(value = "/cidades/total", produces = {"application/json"})
+    @ResponseBody
+    public String totalCidades() {
+        return "{total_registros: " + cityService.getTotalCities() + "}";
     }
 }

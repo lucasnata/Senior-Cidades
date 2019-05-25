@@ -18,5 +18,7 @@ public interface CityRepository extends CrudRepository<City, Integer> {
     City findByIbgeId(Integer ibgeId);
 
     Iterable<CityName> findNameByUf(String uf);
+
+    long count();
 }
 

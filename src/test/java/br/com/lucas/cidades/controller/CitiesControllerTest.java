@@ -21,7 +21,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -49,7 +48,6 @@ public class CitiesControllerTest {
 
         mockMvc.perform(get("/cidades")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"name\":\"Presidente Mdici\"")));
     }
@@ -87,7 +85,12 @@ public class CitiesControllerTest {
                 .contentType("application/json")
                 .characterEncoding("UTF-8")
                 .content(cityJson))
-                .andDo(print())
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void whenGetTotalCities() throws Exception {
+        mockMvc.perform(get("/cidades/total"))
+                .andExpect(status().isOk());
     }
 }
