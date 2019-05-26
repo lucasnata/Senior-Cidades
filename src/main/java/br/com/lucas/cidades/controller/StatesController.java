@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class StatesController extends ControllerExceptions{
+@RequestMapping(produces = {"application/json"})
+public class StatesController {
 
     @Autowired
     StateService stateService;

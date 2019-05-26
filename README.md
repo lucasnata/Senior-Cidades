@@ -1,25 +1,11 @@
 ### Senior-Cidades
 
-POST http://localhost:8080/cidades/importcsv
-<br>Recebe: MultipartFile
+Desafio de Desenvolvimento - Senior Sistemas
 
-GET http://localhost:8080/cidades
-<br>Retorna: JSON Todas as cidades
+XPTO Systems - Cidades CSV
 
-GET http://localhost:8080/cidades/{ibgeId}
-<br>Retorna: JSON Cidade por IbgeId
+Link Swagger 2 (Após rodar a aplicação)
+<br/>http://localhost:8080/swagger-ui.html
 
-GET http://localhost:8080/estado/capitais
-Retorna: JSON Capitais de Cada Estado
-
-GET http://localhost:8080/estado/maior_menor
-<br>Retorna: JSON Estado e Quantidade de Cidades
-
-GET http://localhost:8080/estado/numero_cidades
-<br>Retorna: JSON Numero de Cidades de Cada Estado
-
-GET http://localhost:8080/estado/{uf}
-<br>Retorno: JSON Cidades do Estado Solicitado
-
-POST http://localhost:8080/cidades
-<br>Retorno: HTTP Code 201
+Banco Mysql para rodar com a aplicação no Docker:
+<br/>./docker/docker-compose.yml
