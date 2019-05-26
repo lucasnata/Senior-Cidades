@@ -67,4 +67,9 @@ public class CitiesController extends ControllerExceptions {
     public String getTotalCidadesColuna(@PathVariable String columName) {
         return "{\"total\": " + cityCustomService.countColumnName(columName) + "}";
     }
+
+    @RequestMapping("/cidadas/distancias")
+    public List<CityDTO> getDistancias(){
+        return cityService.getDistancias();
+    }
 }
