@@ -1,7 +1,7 @@
 package br.com.lucas.cidades.controller;
 
 import br.com.lucas.cidades.service.CityCustomService;
-import br.com.lucas.cidades.model.DTO.CityDTO;
+import br.com.lucas.cidades.model.dto.CityDTO;
 import br.com.lucas.cidades.service.CityService;
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;

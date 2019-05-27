@@ -1,11 +1,8 @@
 package br.com.lucas.cidades.service;
 
 import br.com.lucas.cidades.model.*;
-import br.com.lucas.cidades.model.DTO.CityDTO;
-import br.com.lucas.cidades.model.DTO.MaisDistantes;
+import br.com.lucas.cidades.model.dto.CityDTO;
 import br.com.lucas.cidades.model.entity.City;
-import br.com.lucas.cidades.model.entity.DistancesId;
-import br.com.lucas.cidades.model.entity.Distancies;
 import br.com.lucas.cidades.util.CsvUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +16,6 @@ public class CityService {
 
     @Autowired
     CityRepository cityRepository;
-
-    @Autowired
-    DistanceRepository distanceRepository;
 
     public void importCsv(InputStream fis) throws Exception {
         List<CityDTO> cities = CsvUtil.loadObjectList(CityDTO.class, fis);
@@ -55,64 +49,54 @@ public class CityService {
     }
 
     public List<CityDTO> getDistancias() {
-        /* Inviável resolver assim, melhor seria um processo separado calculando
-        e o service apenas consultar as distancias */
 
-        setLatLonDistancias();
-        setDistancias();
+        DistanciasCalculadas calculedDistanciesCities = getCalculedDistanciesCities();
 
-        List<City> cities = getCidadesMaisDistantes();
+        List<City> listCities = new ArrayList<>();
+        listCities.add(cityRepository.findByIbgeId(calculedDistanciesCities.getCidadeGPS1().getIbgeId()));
+        listCities.add(cityRepository.findByIbgeId(calculedDistanciesCities.getCidadeGPS2().getIbgeId()));
 
-        return CityDTO.convertListCidadeToListCidadeDTO(cities);
+        return CityDTO.convertListCidadeToListCidadeDTO(listCities);
     }
 
-    private List<City> getCidadesMaisDistantes() {
+    private DistanciasCalculadas getCalculedDistanciesCities() {
 
-        List<City> cities = new ArrayList<>();
-        MaisDistantes mostDistant = distanceRepository.findMostDistant();
-        cities.add(cityRepository.findByIbgeId(mostDistant.getIgbeId1()));
-        cities.add(cityRepository.findByIbgeId(mostDistant.getIgbeId2()));
-
-        return cities;
-    }
-
-    private void setDistancias() {
-        Iterable<Distancies> distancies = distanceRepository.findAll();
-
-        distancies.forEach(distancie -> {
-            distancie.setDistancia(
-                    calculaDistancia(
-                            distancie.getLatitude1(),
-                            distancie.getLongitude1(),
-                            distancie.getLatitude2(),
-                            distancie.getLongitude2()
-                    )
-            );
-
-            distanceRepository.save(distancie);
-        });
-    }
-
-    private void setLatLonDistancias() {
         Iterable<City> allCities = cityRepository.findAll();
+
+        DistanciasCalculadas mostDistant = new DistanciasCalculadas();
 
         for (City city : allCities) {
 
-            Distancies distancies = new Distancies();
-            distancies.setLatitude1(city.getLatitude());
-            distancies.setLongitude1(city.getLongitude());
+            DistanciasCalculadas calculedCities = new DistanciasCalculadas();
+            calculedCities.setCidadeGPS1(
+                    new CidadeGPS(
+                            city.getIbgeId(),
+                            city.getLatitude(),
+                            city.getLongitude()));
 
             for (City city2 : allCities) {
 
-                distancies.setLatitude2(city2.getLatitude());
-                distancies.setLongitude2(city2.getLongitude());
+                calculedCities.setCidadeGPS2(
+                        new CidadeGPS(
+                                city2.getIbgeId(),
+                                city2.getLatitude(),
+                                city2.getLongitude()));
 
-                DistancesId distancesId = new DistancesId(city.getIbgeId(), city2.getIbgeId());
-                distancies.setIbgeId(distancesId);
+                calculedCities.setDistancia(calculaDistancia(
+                        calculedCities.getCidadeGPS1().getLatitude(), calculedCities.getCidadeGPS1().getLongitude(),
+                        calculedCities.getCidadeGPS2().getLatitude(), calculedCities.getCidadeGPS2().getLongitude()
+                ));
 
-                distanceRepository.save(distancies);
+                if (calculedCities.getDistancia() > mostDistant.getDistancia()) {
+                    mostDistant = new DistanciasCalculadas(
+                            calculedCities.getCidadeGPS1(),
+                            calculedCities.getCidadeGPS2(),
+                            calculedCities.getDistancia());
+                }
+
             }
         }
+        return mostDistant;
     }
 
     private double calculaDistancia(double lat1, double lng1, double lat2, double lng2) {

@@ -1,6 +1,6 @@
 package br.com.lucas.cidades.model;
 
-import br.com.lucas.cidades.model.DTO.MaisDistantes;
+import br.com.lucas.cidades.model.dto.MaisDistantes;
 import br.com.lucas.cidades.model.entity.DistancesId;
 import br.com.lucas.cidades.model.entity.Distancies;
 import org.springframework.data.jpa.repository.Query;

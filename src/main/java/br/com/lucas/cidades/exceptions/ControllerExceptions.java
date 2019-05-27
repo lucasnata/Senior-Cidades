@@ -1,4 +1,4 @@
-package br.com.lucas.cidades.controller;
+package br.com.lucas.cidades.exceptions;
 
 import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.http.HttpStatus;

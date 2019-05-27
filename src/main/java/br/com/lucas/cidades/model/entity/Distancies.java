@@ -11,11 +11,18 @@ public class Distancies {
 
     private Double longitude1;
     private Double latitude1;
+
     private Double longitude2;
     private Double latitude2;
+
     private Double distancia;
 
+    public Distancies(Distancies distancies) {
+        this(distancies.ibgeId, distancies.longitude1,distancies.longitude1,distancies.latitude2,distancies.longitude2,distancies.distancia);
+    }
+
     public Distancies() {
+        this(new DistancesId(0, 0), 0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     public Distancies(DistancesId ibgeId, Double longitude1, Double latitude1, Double longitude2, Double latitude2, Double distancia) {

@@ -1,9 +1,9 @@
 package br.com.lucas.cidades.controller;
 
 import br.com.lucas.cidades.model.*;
-import br.com.lucas.cidades.model.DTO.CityDTO;
-import br.com.lucas.cidades.model.DTO.CityName;
-import br.com.lucas.cidades.model.DTO.NumberCitiesState;
+import br.com.lucas.cidades.model.dto.CityDTO;
+import br.com.lucas.cidades.model.dto.CityName;
+import br.com.lucas.cidades.model.dto.NumberCitiesState;
 import br.com.lucas.cidades.service.StateService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;

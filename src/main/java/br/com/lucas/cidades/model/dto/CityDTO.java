@@ -1,4 +1,4 @@
-package br.com.lucas.cidades.model.DTO;
+package br.com.lucas.cidades.model.dto;
 
 import br.com.lucas.cidades.model.entity.City;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,7 +1,7 @@
 package br.com.lucas.cidades.model;
 
-import br.com.lucas.cidades.model.DTO.CityName;
-import br.com.lucas.cidades.model.DTO.NumberCitiesState;
+import br.com.lucas.cidades.model.dto.CityName;
+import br.com.lucas.cidades.model.dto.NumberCitiesState;
 import br.com.lucas.cidades.model.entity.City;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
