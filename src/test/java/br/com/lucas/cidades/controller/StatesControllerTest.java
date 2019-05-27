@@ -2,6 +2,7 @@ package br.com.lucas.cidades.controller;
 
 import br.com.lucas.cidades.model.DTO.CityDTO;
 import br.com.lucas.cidades.model.FakeCity;
+import br.com.lucas.cidades.service.CityCustomService;
 import br.com.lucas.cidades.service.CityService;
 import br.com.lucas.cidades.service.StateService;
 import org.junit.Test;
@@ -33,6 +34,9 @@ public class StatesControllerTest {
 
     @MockBean
     CityService cityService;
+
+    @MockBean
+    CityCustomService cityCustomService;
 
     @Test
     public void whenGetCapitalsByState_thenReturnJsonCity() throws Exception {

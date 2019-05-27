@@ -3,6 +3,7 @@ package br.com.lucas.cidades.controller;
 import br.com.lucas.cidades.service.CityCustomService;
 import br.com.lucas.cidades.model.DTO.CityDTO;
 import br.com.lucas.cidades.service.CityService;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class CitiesController {
     @PostMapping("/cidades/importcsv")
     @ResponseStatus(HttpStatus.OK)
     public void importCsv(@RequestParam("file") MultipartFile file) throws Exception {
-        // TODO - Validar tipo de arquivo
+        if(!file.getContentType().contains("text/csv")) throw new FileUploadBase.InvalidContentTypeException();
         cityService.importCsv(file.getInputStream());
     }
 
