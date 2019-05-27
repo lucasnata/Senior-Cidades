@@ -1,8 +1,8 @@
 package br.com.lucas.cidades.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -25,11 +25,11 @@ public class SwaggerConfig {
     @Value("Senior Cidades")
     private String description;
 
+    @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.lucas.cidades.controller"))
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("br.com.lucas.cidades"))
                 .build()
                 .apiInfo(getApiInfo());
     }

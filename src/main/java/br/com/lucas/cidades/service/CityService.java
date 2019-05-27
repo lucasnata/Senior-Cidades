@@ -2,7 +2,9 @@ package br.com.lucas.cidades.service;
 
 import br.com.lucas.cidades.model.*;
 import br.com.lucas.cidades.model.dto.CityDTO;
+import br.com.lucas.cidades.model.entity.CidadeGPS;
 import br.com.lucas.cidades.model.entity.City;
+import br.com.lucas.cidades.model.entity.DistanciasCalculadas;
 import br.com.lucas.cidades.util.CsvUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

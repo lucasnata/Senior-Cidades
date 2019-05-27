@@ -1,4 +1,4 @@
-package br.com.lucas.cidades.model;
+package br.com.lucas.cidades.model.entity;
 
 public class CidadeGPS {
 

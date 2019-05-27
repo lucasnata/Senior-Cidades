@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.containsString;
@@ -23,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
+@TestPropertySource(locations = "/test.properties")
 @WebMvcTest
 public class StatesControllerTest {
 
@@ -50,7 +53,6 @@ public class StatesControllerTest {
         mockMvc.perform(get("/estado/capitais")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(content().string(containsString("\"capital\":true")));
     }
 
@@ -72,8 +74,7 @@ public class StatesControllerTest {
     public void whenGetCitiesByState_thenReturnJson() throws Exception {
         mockMvc.perform(get("/estado/MA")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(status().isOk());
     }
 
     @Test
